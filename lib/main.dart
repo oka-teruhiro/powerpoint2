@@ -69,14 +69,22 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: (){
                 print('onTap()');
               },
-              onTapDown: (details){
-                print('onTapDown():$details');
+              onTapDown: (details1){
+                print('onTapDown():$details1');
               },
-              child: const Text(
-                'How to use GestureDetector',
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyle(fontWeight: FontWeight.bold),
+              onTapUp: (details2){
+                print('onTapUp():$details2');
+              },
+              child: Container(
+                color: Colors.blue,
+                width: 100,
+                height: 100,
+                child: const Text(
+                  'How to use GestureDetector',
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           ],
