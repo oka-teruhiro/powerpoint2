@@ -34,6 +34,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
+  double d3 = 0.0;
 
   void _incrementCounter() {
     setState(() {
@@ -68,12 +69,20 @@ class _MyHomePageState extends State<MyHomePage> {
             GestureDetector(
               onTap: (){
                 print('onTap()');
+                d3 = 0;
               },
               onTapDown: (details1){
                 print('onTapDown():$details1');
               },
               onTapUp: (details2){
                 print('onTapUp():$details2');
+              },
+              onVerticalDragUpdate: (details3){
+                print('onVerticalDragUpdate():$details3 d3:$d3');
+                d3 = d3 + details3.delta.dy ;
+                setState(() {
+
+                });
               },
               child: Container(
                 color: Colors.blue,
