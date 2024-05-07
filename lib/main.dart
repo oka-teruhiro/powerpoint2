@@ -35,12 +35,26 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   double d3 = 0.0;
+  Offset _posision = Offset(0, 0);
 
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
       _counter++;
     });
+  }
+  void _onPanUpdate(DragUpdateDetails details,bool isHorizontal){
+    setState(() {
+      _posision = Offset(
+          _posision.dx + (isHorizontal ? details.primaryDelta! : 0),
+          _posision.dy + (!isHorizontal ? details.primaryDelta! : 0));
+    });
+
+    print('globalPosition: ${details.globalPosition}');
+    print('localPosition: ${details.localPosition}');
+    print('delta: ${details.delta}');
+    print('primaryDelta: ${details.primaryDelta}');
+    print('sourceTimeStamp: ${details.sourceTimeStamp}');
   }
 
   @override
@@ -53,7 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Here we take the value from the MyHomePage object that was created by
         title: Text(widget.title),
       ),
-      body: Center(
+      body: /*Center(
         // Center is a layout widget. It takes a single child and positions it
         child: Column(
           // Column is also a layout widget. It takes a list of children and
@@ -98,6 +112,32 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ],
         ),
+      ),*/
+      Stack(
+        children: [
+          Positioned(
+            left: _posision.dx,
+            top: _posision.dy,
+            child: GestureDetector(
+              onHorizontalDragUpdate: (details){_onPanUpdate(details, true);},
+              onVerticalDragUpdate: (details){_onPanUpdate(details, false );},
+              child: Container(
+                width: 100,
+                height: 100,
+                color: Colors.blue,
+                child: const Center(
+                  child: Text(
+                    'Drag me',
+                    style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
