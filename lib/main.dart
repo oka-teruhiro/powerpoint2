@@ -36,6 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   double d3 = 0.0;
   Offset _posision = Offset(0, 0);
+  String _gestureText = 'Try GestureDetector!';
+  String _detailsText = '';
 
   void _incrementCounter() {
     setState(() {
@@ -55,6 +57,17 @@ class _MyHomePageState extends State<MyHomePage> {
     print('delta: ${details.delta}');
     print('primaryDelta: ${details.primaryDelta}');
     print('sourceTimeStamp: ${details.sourceTimeStamp}');
+  }
+  void _updateGestureText(String text) {
+    setState(() {
+      _gestureText = text;
+    });
+  }
+
+  void _updateDetailsText(String text) {
+    setState(() {
+      _detailsText = text;
+    });
   }
 
   @override
@@ -113,7 +126,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),*/
-      Stack(
+      /*Stack(
         children: [
           Positioned(
             left: _posision.dx,
@@ -133,6 +146,48 @@ class _MyHomePageState extends State<MyHomePage> {
                     fontSize: 16,
                     ),
                   ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),*/
+      Stack(
+        children: [
+          GestureDetector(
+            onTap: () => _updateGestureText('Tap detected!'),
+            onDoubleTap: () => _updateGestureText('Double tap detected!'),
+            onLongPress: () => _updateGestureText('Long press detected!'),
+            onVerticalDragEnd: (details) {
+              _updateGestureText('Vertical swipe detected!');
+              _updateDetailsText(
+                  'Velocity: ${details.primaryVelocity} ${details.velocity}');
+            },
+            onHorizontalDragEnd: (details) {
+              _updateGestureText('Horizontal swipe detected!');
+              _updateDetailsText(
+                  'Velocity: ${details.primaryVelocity}  ${details.velocity}');
+            },
+            child: Container(
+              width: 200,
+              height: 200,
+              color: Colors.blue,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      _gestureText,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      _detailsText,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    ),
+                  ],
                 ),
               ),
             ),
